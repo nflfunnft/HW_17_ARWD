@@ -1,6 +1,10 @@
-@import "vars";
+@use 'vars' as v;
+@use 'mixins' as m;
 
-// 1. Reset & Global
+// ═══════════════════════════════════════════════
+//  1. Reset & Global
+// ═══════════════════════════════════════════════
+
 * {
     padding: 0;
     margin: 0;
@@ -8,8 +12,8 @@
 }
 
 body {
-    font-family: $font-main;
-    color: $color-dark;
+    font-family: v.$font-main;
+    color: v.$color-dark;
     line-height: 1.5;
 }
 
@@ -19,7 +23,7 @@ img {
 }
 
 .container {
-    max-width: $container-width;
+    max-width: v.$container-width;
     padding: 0 15px;
     margin: 0 auto;
 }
@@ -29,42 +33,30 @@ img {
     font-weight: 700;
 }
 
-// 2. Components
+// ═══════════════════════════════════════════════
+//  2. Components
+// ═══════════════════════════════════════════════
+
+// ─── Button ─────────────────────────────────────
 .btn {
     display: inline-block;
     padding: 15px 35px;
     border: none;
     cursor: pointer;
-    // text-transform: uppercase;
     font-family: inherit;
-    transition: 0.3s ease;
+    transition: background-color 0.3s ease;
 
     &--secondary {
-        background-color: $btn-bg;
-        color: $color-white;
+        background-color: v.$color-charcoal;
+        color: v.$color-white;
 
         &:hover {
-            background-color: lighten($btn-bg, 10%);
+            background-color: lighten(v.$color-charcoal, 10%);
         }
     }
 }
 
-// 3. Sections
-.hero {
-    min-height: 600px;
-    background: url('../assets/img/bg-image.webp') center / cover no-repeat;
-    margin-bottom: 90px;
-    padding-top: 100px;
-
-    &__title {
-        max-width: 770px;
-        font-size: 48px;
-        line-height: 1.2;
-        text-align: left;
-        margin: 0;
-    }
-}
-
+// ─── Blog Card ──────────────────────────────────
 .blog-card {
     display: flex;
     justify-content: space-between;
@@ -74,6 +66,10 @@ img {
 
     &--reverse {
         flex-direction: row-reverse;
+
+        .blog-card__content {
+            align-items: flex-end;
+        }
 
         .blog-card__text-wrapper {
             text-align: right;
@@ -94,12 +90,7 @@ img {
 
     &__content {
         flex: 0 1 50%;
-        display: flex;
-        flex-direction: column;
-
-        .blog-card--reverse & {
-            align-items: flex-end;
-        }
+        @include m.flex-column;
     }
 
     &__text-wrapper {
@@ -109,9 +100,16 @@ img {
     }
 
     &__category {
-        font-size: 14px;
-        color: $color-gray;
         display: block;
+        font-size: 14px;
+        color: v.$color-gray;
+        margin-bottom: 12px;
+    }
+
+    &__date {
+        display: block;
+        font-size: 14px;
+        color: v.$color-gray;
         margin-bottom: 12px;
     }
 
@@ -122,13 +120,13 @@ img {
     }
 
     &__text {
-        color: $color-gray;
+        color: v.$color-gray;
         font-size: 16px;
     }
 
     &__more-link {
         text-decoration: none;
-        color: $color-dark;
+        color: v.$color-dark;
         font-weight: 700;
         margin-left: 5px;
         font-size: 18px;
@@ -139,48 +137,9 @@ img {
     }
 }
 
-.posts,
-.popular {
-    padding: 0 0;
-
-    &__header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 90px;
-        margin-bottom: 40px;
-    }
-
-    &__view-link {
-        text-decoration: none;
-        color: $color-dark;
-        font-weight: 600;
-    }
-}
-
-.posts__grid {
-    display: flex;
-    gap: 30px;
-    flex-wrap: wrap;
-
-    &>.post-card {
-        flex: 0 1 calc(33.333% - 20px);
-    }
-}
-
-.posts-grid--two-columns {
-    display: flex;
-    gap: 30px;
-    flex-wrap: wrap;
-
-    .post-card {
-        flex: 0 1 calc(50% - 15px);
-    }
-}
-
+// ─── Post Card ──────────────────────────────────
 .post-card {
-    display: flex;
-    flex-direction: column;
+    @include m.flex-column;
 
     &__image {
         margin-bottom: 20px;
@@ -190,36 +149,96 @@ img {
         }
     }
 
-    &__category,
-    &__date {
-        font-size: 12px;
-        color: $color-gray;
+    &__meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 5px;
     }
 
+    &__category,
     &__date {
-        margin-left: 10px;
+        @include m.text-meta;
     }
 
     &__title {
         font-size: 20px;
-        margin: 15px 0;
-        line-height: 1.3;
         font-weight: 700;
+        line-height: 1.3;
+        margin: 15px 0;
     }
 
     &__text {
         font-size: 14px;
-        color: $color-gray;
+        color: v.$color-gray;
         line-height: 1.6;
     }
 }
 
-.popular__actions {
-    display: flex;
-    justify-content: center;
-    margin-top: 50px;
+// ═══════════════════════════════════════════════
+//  3. Sections
+// ═══════════════════════════════════════════════
+
+// ─── Hero ───────────────────────────────────────
+.hero {
+    min-height: 600px;
+    background: url('../assets/img/bg-image.webp') center / cover no-repeat;
+    margin-bottom: v.$section-gap;
+    padding-top: 100px;
+
+    &__title {
+        max-width: 770px;
+        font-size: 48px;
+        line-height: 1.2;
+        margin: 0;
+    }
 }
 
+// ─── Blog ───────────────────────────────────────
+.blog {
+    margin-bottom: v.$section-gap;
+}
+
+// ─── Posts ──────────────────────────────────────
+.posts {
+    &__header {
+        @include m.section-header;
+    }
+
+    &__view-link {
+        text-decoration: none;
+        color: v.$color-dark;
+        font-weight: 600;
+    }
+
+    &__grid {
+        @include m.grid-flex(3);
+    }
+}
+
+// ─── Popular ────────────────────────────────────
+.popular {
+    &__header {
+        @include m.section-header;
+    }
+
+    &__view-link {
+        text-decoration: none;
+        color: v.$color-dark;
+        font-weight: 600;
+    }
+
+    &__grid {
+        @include m.grid-flex(2);
+    }
+
+    &__actions {
+        @include m.flex-center;
+        margin-top: 50px;
+    }
+}
+
+// ─── Info ───────────────────────────────────────
 .info {
     padding: 50px 0;
 
@@ -239,25 +258,26 @@ img {
         span {
             display: block;
             font-weight: 400;
-            color: $color-gray;
             font-size: 18px;
+            color: v.$color-gray;
             margin-top: 5px;
         }
     }
 
     &__arrow-link {
+        display: inline-block;
         font-size: 30px;
         text-decoration: none;
-        color: $color-dark;
-        display: inline-block;
+        color: v.$color-dark;
     }
 
     &__text {
-        margin-bottom: 25px;
         font-size: 18px;
+        margin-bottom: 25px;
     }
 }
 
+// ─── Footer ─────────────────────────────────────
 .footer {
     padding: 40px 0;
 }
