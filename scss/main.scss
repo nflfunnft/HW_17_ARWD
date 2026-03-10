@@ -27,7 +27,6 @@ img {
 .section-title {
     font-size: 32px;
     font-weight: 700;
-    margin-bottom: 50px;
 }
 
 // 2. Components
@@ -36,7 +35,7 @@ img {
     padding: 15px 35px;
     border: none;
     cursor: pointer;
-    text-transform: uppercase;
+    // text-transform: uppercase;
     font-family: inherit;
     transition: 0.3s ease;
 
@@ -70,7 +69,7 @@ img {
     display: flex;
     justify-content: space-between;
     gap: 30px;
-    margin-bottom: 80px;
+    margin-top: 50px;
     align-items: center;
 
     &--reverse {
@@ -142,12 +141,13 @@ img {
 
 .posts,
 .popular {
-    padding: 40px 0;
+    padding: 0 0;
 
     &__header {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        margin-top: 90px;
         margin-bottom: 40px;
     }
 
@@ -250,7 +250,6 @@ img {
         text-decoration: none;
         color: $color-dark;
         display: inline-block;
-        margin-top: 20px;
     }
 
     &__text {
